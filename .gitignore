@@ -1,0 +1,35 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.DS_Store
+*.classpath
+*.project
+/ref
+/jdoc
+/.settings
+
+bin
+out
+target
+build
+
+# Eclipse stuff
+.classpath
+
+# Idea stuff
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
+
+# Gradle stuff
+.gradle
+!gradle-wrapper.jar
+
+# Virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+compiled
