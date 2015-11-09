@@ -1,6 +1,6 @@
 package itest.consensus;
 
-import itest.consensus.impl.ConcensusImpl;
+import itest.consensus.impl.ConsensusImpl;
 import itest.consensus.impl.voter.FalseVoter;
 import itest.consensus.impl.voter.RandomVoter;
 import itest.consensus.impl.voter.TrueVoter;
@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class ConcensusTest {
-    private Concensus consensus;
+public class ConsensusTest {
+    private Consensus consensus;
     private ArrayList<Voter> voters;
 
     @Before
     public void setUp() throws Exception {
         voters = new ArrayList<Voter>();
-        consensus = new ConcensusImpl();
+        consensus = new ConsensusImpl();
     }
 
     /**

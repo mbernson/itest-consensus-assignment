@@ -1,11 +1,11 @@
 package itest.consensus.impl;
 
-import itest.consensus.Concensus;
+import itest.consensus.Consensus;
 import itest.consensus.Voter;
 
 import java.util.ArrayList;
 
-public class SimpleConcensus implements Concensus {
+public class SimpleConsensus implements Consensus {
     @Override
     public boolean voting(ArrayList<Voter> voters) {
         for(final Voter v : voters) {

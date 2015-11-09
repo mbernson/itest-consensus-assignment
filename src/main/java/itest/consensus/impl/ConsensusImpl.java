@@ -1,11 +1,11 @@
 package itest.consensus.impl;
 
-import itest.consensus.Concensus;
+import itest.consensus.Consensus;
 import itest.consensus.Voter;
 
 import java.util.ArrayList;
 
-public class ConcensusImpl implements Concensus {
+public class ConsensusImpl implements Consensus {
     @Override
     public boolean voting(ArrayList<Voter> voters) {
         if(null == voters || voters.isEmpty())

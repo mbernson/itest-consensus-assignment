@@ -2,6 +2,6 @@ package itest.consensus;
 
 import java.util.ArrayList;
 
-public interface Concensus {
+public interface Consensus {
     boolean voting(ArrayList<Voter> voters);
 }
