@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+# Do not install anything, instead return true via unix command true
+install: true
+# Enable container-based stack
+sudo: false
