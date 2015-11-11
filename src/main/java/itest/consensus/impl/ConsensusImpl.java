@@ -27,6 +27,7 @@ public class ConsensusImpl implements Consensus {
                 }
             }
         }
+
         return result;
     }
 
@@ -39,13 +40,30 @@ public class ConsensusImpl implements Consensus {
 
     /**
      * Check whether the voters list is usable.
+     * The voters list is valid when:
+     *
+     * - It is not null
+     * - It is not empty
+     * - It contains at least one non-null voter
      */
     private boolean votersAreValid(final ArrayList<Voter> voters) {
-        return null != voters && !voters.isEmpty();
+        if(null == voters)
+            return false;
+
+        if(voters.isEmpty())
+            return false;
+
+        // Check if there's at least one non-null voter present
+        for(final Voter v : voters) {
+            if(v != null)
+                return true;
+        }
+        // Otherwise, assume the list is invalid
+        return false;
     }
 
     /**
-     * Check whether a voter has voted before.
+     * Check whether a voter object has voted before.
      */
     private boolean hasVoted(final Voter voter) {
         return hasVoted.contains(voter);

@@ -1,6 +1,7 @@
 package itest.consensus;
 
 import itest.consensus.impl.ConsensusImpl;
+import itest.consensus.impl.SimpleConsensus;
 import itest.consensus.impl.voter.FalseVoter;
 import itest.consensus.impl.voter.RandomVoter;
 import itest.consensus.impl.voter.TrueVoter;
@@ -8,20 +9,36 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+@RunWith(Parameterized.class)
 public class ConsensusTest {
-    private Consensus consensus;
+    @Parameter
+    public Consensus consensus;
+
     private ArrayList<Voter> voters;
+
+    @Parameters
+    public static Collection<Consensus> consensusCollection() {
+        return Arrays.asList(
+                new ConsensusImpl()
+//                new SimpleConsensus()
+        );
+    }
 
     @Before
     public void setUp() throws Exception {
         voters = new ArrayList<Voter>();
-        consensus = new ConsensusImpl();
     }
 
     /**
@@ -67,11 +84,20 @@ public class ConsensusTest {
         consensus.voting(voters);
     }
 
+    @Test(expected = Exception.class)
+    public void testExceptionIsThrownWhenAllVotersAreNull() {
+        voters.add(null);
+        voters.add(null);
+        voters.add(null);
+
+        consensus.voting(voters);
+    }
+
     /**
      * Specificatie 4: Iedere valide stemmer (dat wil zeggen, iedere niet null stemmer) moet stemmen.
      */
     @Test
-    public void testConcencusLetsEveryVoterVoteAndIgnoresNullVoters() {
+    public void testConsencusLetsEveryVoterVoteAndIgnoresNullVoters() {
         Voter voterMock = mock(Voter.class);
 
         voters.add(new TrueVoter());
@@ -82,7 +108,7 @@ public class ConsensusTest {
 
         assertFalse(consensus.voting(voters));
 
-        verify(voterMock, times(1)).vote();
+        verify(voterMock).vote();
     }
 
     /**
@@ -91,7 +117,7 @@ public class ConsensusTest {
     @Test
     public void testVoteIsCalledExactlyOnceOnVoters() {
         Voter voterMockFalse = mock(Voter.class),
-                voterMockTrue = mock(Voter.class);
+              voterMockTrue = mock(Voter.class);
 
         when(voterMockFalse.vote()).thenReturn(false);
         when(voterMockTrue.vote()).thenReturn(true);
@@ -106,10 +132,9 @@ public class ConsensusTest {
     }
 
     @Test
-    @Ignore
-    public void testVoteIsCalledExactlyOnceForEqualObjects() {
+    public void testVoteIsCalledExactlyOnceOnDuplicateVoters() {
         Voter voterMockFalse = mock(Voter.class),
-                voterMockTrue = mock(Voter.class);
+              voterMockTrue = mock(Voter.class);
 
         when(voterMockFalse.vote()).thenReturn(false);
         when(voterMockTrue.vote()).thenReturn(true);
